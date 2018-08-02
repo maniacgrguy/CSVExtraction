@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace ConsoleApp1
+namespace ConsoleApp
 {
     class DataAccess
     {
         string connectionString = string.Empty;
-       
+
         public DataAccess()
         {
 
@@ -31,6 +29,29 @@ namespace ConsoleApp1
             {
                 Console.WriteLine($"Connection couldnot be open {ex.Message}");
                 return false;
+            }
+        }
+
+        public DataTable ExecuteQuery(string query)
+        {
+            DataTable dt;
+            try
+            {
+                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                {
+                    dt = new DataTable();
+                    using (SqlCommand sqlCmd = new SqlCommand(query, sqlConnection))
+                    {
+                        SqlDataAdapter sAdap = new SqlDataAdapter(sqlCmd);
+                        sAdap.Fill(dt);
+                    }
+                }
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error while executing query " + ex.Message);
+                return null;
             }
         }
     }

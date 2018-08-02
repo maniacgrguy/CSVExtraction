@@ -9,6 +9,8 @@
 *.dll.config
 *.cache
 *.suo
+*.mdf
+*.ldf
 # Include dlls if they’re in the NuGet packages directory
 !/packages/*/lib/*.dll
 # Include dlls if they're in the CommonReferences directory
@@ -23,7 +25,7 @@ _UpgradeReport_Files/
 ###############
 bin/
 obj/
-/.vs
+.vs/
 ###################
 # Web publish log #
 ###################

@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Data;
 
-namespace ConsoleApp1
+namespace ConsoleApp
 {
     public class ServerConfiguration
     {
         private DataAccess _dataAccess;
-        private CSVExtraction _csvExtraction;
         public string flag = "Disable";
         public ServerConfiguration()
         {
             _dataAccess = new DataAccess();
-            _csvExtraction = new CSVExtraction();
         }
-        void SetUpServer()
+        public void SetUpServer()
         {
             Console.WriteLine("Type Server name or IP");
             var serverName = Console.ReadLine();
@@ -29,21 +27,20 @@ namespace ConsoleApp1
             var databaseName = Console.ReadLine();
 
             bool success = _dataAccess.TestConnection(serverName, databaseName, userID, password);
-
+            string res = success ? "successful" : "failed";
+            Console.WriteLine("Connection :" + res);
         }
 
         void StartSetupTable()
         {
-            
+
             Console.WriteLine("Type quit to exit the Table Setup,");
-            
+
             //SetUpTableAndColumn(tableColInfo);
         }
 
-
-        public void SetUpTableAndColumn(Dictionary<string, List<string>> tableColInfo)
+        public void SetUpTableAndColumn(ref Dictionary<string, List<string>> tableColInfo)
         {
-            
             Console.WriteLine("Type Table name :");
             var tableName = Console.ReadLine().ToLower();
             do
@@ -55,7 +52,7 @@ namespace ConsoleApp1
                 }
                 Console.WriteLine("Start providing column name,Type quit to exit the flow");
                 List<string> colNameList = new List<string>();
-                
+
                 string value = string.Empty;
                 do
                 {
@@ -66,7 +63,7 @@ namespace ConsoleApp1
                         Console.WriteLine("Enter another table ? (Y/N)");
                         value = Console.ReadLine().ToLower();
                         if (value == "y")
-                            SetUpTableAndColumn(tableColInfo);
+                            SetUpTableAndColumn(ref tableColInfo);
                         else
                         {
                             tableColInfo.Add(tableName, colNameList);
@@ -75,14 +72,14 @@ namespace ConsoleApp1
                         }
                     }
                     colNameList.Add(value);
-
                 } while (value != "quit");
-
-                
             } while (tableName != "quit");
-            Console.WriteLine("New Query is :");
-            _csvExtraction.GenerateQuery(tableColInfo);
-
         }
+
+        public DataTable ExecuteQuery(string query)
+        {
+            return _dataAccess.ExecuteQuery(query);
+        }
+
     }
 }
