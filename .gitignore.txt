@@ -25,7 +25,10 @@ _UpgradeReport_Files/
 ###############
 bin/
 obj/
-.vs/
+# VSCode config files.
+# VS2017 and VSCode Config files.
+.vscode
+.vs
 ###################
 # Web publish log #
 ###################
