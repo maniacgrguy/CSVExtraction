@@ -17,17 +17,26 @@ namespace ConsoleApp
             Console.WriteLine("Type Server name or IP");
             var serverName = Console.ReadLine();
 
-            Console.WriteLine("Type User Id");
-            var userID = Console.ReadLine();
-
-            Console.WriteLine("Type Password");
-            var password = Console.ReadLine();
-
             Console.WriteLine("Type Database Name");
             var databaseName = Console.ReadLine();
 
-            bool success = _dataAccess.TestConnection(serverName, databaseName, userID, password);
-            string res = success ? "successful" : "failed";
+            Console.WriteLine("Are you doing windows authentication ? (Type Y/N) :");
+            var isWindowAuth = Console.ReadLine() == "Y";
+
+            if (!isWindowAuth)
+            {
+                Console.WriteLine("Type User Id");
+                var userID = Console.ReadLine();
+
+                Console.WriteLine("Type Password");
+                var password = Console.ReadLine();
+
+                bool success = _dataAccess.TestConnection(serverName, databaseName, isWindowAuth, userID, password);
+
+                Console.WriteLine("Connection :" + (success ? "successful" : "failed"));
+            }
+            // need to change this code to more dynamic if else
+            string res = _dataAccess.TestConnection(serverName, databaseName, isWindowAuth, "", "") ? "successful" : "failed";
             Console.WriteLine("Connection :" + res);
         }
 

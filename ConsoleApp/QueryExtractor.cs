@@ -18,25 +18,26 @@ namespace ConsoleApp
             foreach (KeyValuePair<string, List<string>> tableList in tableColInfo)
             {
                 i++;
-                tableName = tableList.Key + "_" + i;
+                tableName = tableList.Key;
                 var columnNames = tableList.Value;
                 foreach (var colName in columnNames)
                 {
-                    if (tableColInfo.Count == tableCount)
+                    if (colCount == 1)
                     {
-                        sb.Insert(6, " " + tableName + "." + colName + ",");
+                        sb.Insert(6, " " + tableName + "." + colName);
                     }
                     else
                     {
-                        if (colCount == 1)
-                        {
-                            sb.Insert(6, " " + tableName + "." + colName);
-                        }
-                        else
-                        {
-                            sb.Insert(6, " " + tableName + "." + colName + ",");
-                        }
+                        sb.Insert(6, " " + tableName + "." + colName + ",");
                     }
+                    //if (tableColInfo.Count == tableCount)
+                    //{
+                    //    sb.Insert(6, " " + tableName + "." + colName + ",");
+                    //}
+                    //else
+                    //{
+                       
+                    //}
                     colCount += 1;
                 }
                 if (tableCount != 1)

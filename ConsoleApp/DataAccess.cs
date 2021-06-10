@@ -12,11 +12,12 @@ namespace ConsoleApp
         {
 
         }
-        public bool TestConnection(string serverName, string databaseName, string id, string password)
+        public bool TestConnection(string serverName, string databaseName, bool isWindowsAuth, string id, string password)
         {
             try
             {
-                connectionString = $"Data Source={serverName};Initial Catalog={databaseName}; User id={id}; Password={password};";
+                connectionString = isWindowsAuth ? $"Data Source={serverName};Initial Catalog={databaseName};Integrated Security=SSPI" :
+                                                   $"Data Source={serverName};Initial Catalog={databaseName}; User id={id}; Password={password};";
                 using (SqlConnection sqlConnection = new SqlConnection(connectionString))
                 {
                     sqlConnection.Open();

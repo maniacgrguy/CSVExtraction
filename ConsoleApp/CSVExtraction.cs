@@ -16,7 +16,7 @@ namespace ConsoleApp
         public void GenerateCSV(DataTable dtData)
         {
             var directory = Directory.GetCurrentDirectory();
-            FileInfo fileInfo = new FileInfo($"{directory}\\{DateTime.Today } excel");
+            FileInfo fileInfo = new FileInfo($"{directory}\\{DateTime.Today.ToString("yyyyMMdd") }.xlsx");
             using (ExcelPackage pck = new ExcelPackage(fileInfo))
             {
                 ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Accounts");
